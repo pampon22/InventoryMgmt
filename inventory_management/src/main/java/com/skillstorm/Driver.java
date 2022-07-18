@@ -1,12 +1,12 @@
-package com.project;
+package com.skillstorm;
 
 import java.util.List;
 
-import com.project.daos.MySQLShoeDAOImpl;
-import com.project.daos.MySQLWarehouseDAOImpl;
-import com.project.daos.ShoeDAO;
-import com.project.daos.WarehouseDAO;
-import com.project.models.Warehouse;
+import com.skillstorm.daos.MySQLShoeDAOImpl;
+import com.skillstorm.daos.MySQLWarehouseDAOImpl;
+import com.skillstorm.daos.ShoeDAO;
+import com.skillstorm.daos.WarehouseDAO;
+import com.skillstorm.models.Warehouse;
 
 /**
  * has the main method for starting up the application.
@@ -26,6 +26,13 @@ public class Driver {
 		
 		WarehouseDAO w = new MySQLWarehouseDAOImpl();
 		List<Warehouse> warehouses = w.findAll();
-		System.out.println(warehouses);
+//		System.out.println(warehouses);
+
+		List<Warehouse> byState = w.findByState("MA");
+		System.out.println(byState);
+		
+		System.out.println(w.findById(1));
+		Warehouse newWarehouse = new Warehouse("NV");
+		System.out.println(w.save(newWarehouse));
 	}
 }

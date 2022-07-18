@@ -1,4 +1,4 @@
-package com.project.daos;
+package com.skillstorm.daos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.Statement;
 
-import com.project.config.HandleyDBCreds;
-import com.project.models.Shoe;
+import com.skillstorm.config.HandleyDBCreds;
+import com.skillstorm.models.Shoe;
 
 /**
  * Implementation of the Shoe DAO for MySQL
@@ -101,7 +101,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 	 */
 	@Override
 	public Shoe findById(int id) {
-		String sql = "SELECT * FROM Artist WHERE ArtistId = " + id;
+		String sql = "SELECT * FROM shoe WHERE shoe_id = " + id;
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -117,7 +117,16 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 
 	@Override
 	public Shoe save(Shoe shoe) {
+		String sql = "INSERT INTO shoe (name, brand, color ...) VALUES (?)";
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, shoe.getId());
+				ps.setString(2, shoe.getName());
 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		return null;
 	}
 

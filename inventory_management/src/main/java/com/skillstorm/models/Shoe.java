@@ -1,4 +1,4 @@
-package com.project.models;
+package com.skillstorm.models;
 
 
 /**
@@ -136,4 +136,16 @@ public class Shoe {
 		this.quantity = quantity;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand
+				+ ", quantity=" + quantity + "]";
+	}
+
+	
+//	public static void main(String[] args) {
+//		Shoe shoe = new Shoe(1, "lebron soldier", "nike");
+//		System.out.println(shoe);
+//	}
 }

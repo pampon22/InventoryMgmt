@@ -1,4 +1,4 @@
-package com.project.models;
+package com.skillstorm.models;
 
 
 /**
@@ -16,6 +16,10 @@ public class Warehouse {
 		super();
 	}
 
+	public Warehouse(String state) {
+		super();
+		this.state = state;
+	}
 
 	public Warehouse(int id, String state) {
 		super();
@@ -41,6 +45,12 @@ public class Warehouse {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Warehouse [id=" + id + ", state=" + state + "]";
 	}
 
 }

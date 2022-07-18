@@ -1,8 +1,8 @@
-package com.project.daos;
+package com.skillstorm.daos;
 
 import java.util.List;
 
-import com.project.models.Shoe;
+import com.skillstorm.models.Shoe;
 
 /**
  * warehouse DAO interface that has methods representing queries specific to Shoe
