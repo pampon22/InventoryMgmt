@@ -30,7 +30,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 			// You need to advance the cursor with it so that you can parse all of the results
 			while(rs.next()) {
 				// Looping over individual rows of the result set
-				Warehouse warehouse = new Warehouse( rs.getInt("warehouse_id"), rs.getString("state") );
+				Warehouse warehouse = new Warehouse( rs.getInt("warehouse_id"), rs.getString("state"), rs.getInt("capacity") );
 				warehouses.add(warehouse);
 			}			
 			return warehouses;
@@ -49,7 +49,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 			ResultSet rs = ps.executeQuery();
 			LinkedList<Warehouse> warehouses = new LinkedList<>();
 			while (rs.next()) {
-				warehouses.add(new Warehouse(rs.getInt(1), rs.getString(2)));
+				warehouses.add(new Warehouse(rs.getInt(1), rs.getString(2), rs.getInt(3)));
 			}
 			return warehouses;
 		} catch (SQLException e) {
@@ -66,7 +66,7 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				return new Warehouse(rs.getInt(1), rs.getString(2));
+				return new Warehouse(rs.getInt(1), rs.getString(2), rs.getInt(3));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,7 +88,6 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 				ResultSet keys = ps.getGeneratedKeys();
 				// List a of all generated keys
 				if (keys.next()) {
-					System.out.println(rowsAffected);
 					int key = keys.getInt(1); // gives the auto generated key
 					warehouse.setId(key);
 					return warehouse;
@@ -106,27 +105,80 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 	}
 
 	@Override
-	public void delete(Warehouse Warehouse) {
-		// TODO Auto-generated method stub
+	public boolean delete(Warehouse warehouse) {
+		String sql = "DELETE FROM warehouse WHERE warehouse_id = ?";
+		boolean rowDeleted = false;
+		
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+		
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, warehouse.getId());
+			rowDeleted = ps.executeUpdate() > 0;
+			return rowDeleted;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+
+		return rowDeleted;
 		
 	}
 
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
+	public boolean deleteById(int id) {
+		String sql = "DELETE FROM warehouse WHERE warehouse_id = ?";
+		boolean rowDeleted = false;
 		
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+		
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, id);
+			rowDeleted = ps.executeUpdate() > 0;
+			return rowDeleted;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+
+		return rowDeleted;
 	}
 
 	@Override
-	public void deleteMany(int[] ids) {
-		// TODO Auto-generated method stub
+	public boolean deleteMany(int[] ids) {
+		String sql = "DELETE FROM warehouse WHERE warehouse_id IN (?)";
+		boolean rowDeleted = false;
 		
-	}
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+		
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setObject(1, ids);
+			rowDeleted = ps.executeUpdate() > 0;
+			return rowDeleted;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+
+		return rowDeleted;	}
 
 	@Override
-	public void update(Warehouse warehouse) {
-		// TODO Auto-generated method stub
-		
+	public boolean update(Warehouse warehouse) {
+		String sql = "UPDATE warehouse SET state = ?, capacity = ? WHERE warehouse_id = ?";
+		boolean rowUpdated = false;
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+			
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//			ps.setInt(1, warehouse.getId());
+			ps.setString(1, warehouse.getState());
+			ps.setInt(2, warehouse.getCapacity());
+			ps.setInt(3, warehouse.getId());
+			rowUpdated = ps.executeUpdate() > 0;
+			return rowUpdated;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+		return rowUpdated;
 	}
 
 }

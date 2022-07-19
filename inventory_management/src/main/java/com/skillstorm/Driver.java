@@ -26,13 +26,25 @@ public class Driver {
 		
 		WarehouseDAO w = new MySQLWarehouseDAOImpl();
 		List<Warehouse> warehouses = w.findAll();
-//		System.out.println(warehouses);
-
-		List<Warehouse> byState = w.findByState("MA");
-		System.out.println(byState);
-		
-		System.out.println(w.findById(1));
+		System.out.println(warehouses);
+//
+//		List<Warehouse> byState = w.findByState("MA");
+//		System.out.println(byState);
+//		
+//		System.out.println(w.findById(1));
 		Warehouse newWarehouse = new Warehouse("NV");
-		System.out.println(w.save(newWarehouse));
+		w.save(newWarehouse);
+		
+		System.out.println(w.findAll());
+		
+		System.out.println(w.delete(newWarehouse));
+		System.out.println(w.deleteById(13));
+		
+//		int[] ids = new int[] {1,3,14};
+//		System.out.println(w.deleteMany(ids));
+		
+		System.out.println(w.update(new Warehouse(11, "CA", 10)));
+		
+		System.out.println(w.findAll());
 	}
 }

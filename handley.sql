@@ -24,8 +24,9 @@ USE `Handley`;
 CREATE TABLE `warehouse` (
   `warehouse_id` int unsigned NOT NULL AUTO_INCREMENT,
   `state` char(2) NOT NULL,
+  `capacity` int unsigned DEFAULT NULL,
   PRIMARY KEY (`warehouse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `brand` (
   `brand_id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -65,6 +66,8 @@ CREATE TABLE `postal_code` (
 	Population with data
 ***********/
 INSERT INTO `warehouse` (`state`) VALUES ('CA');
-INSERT INTO `warehouse` (`state`) VALUES (N'NV');
+INSERT INTO `warehouse` (`state`) VALUES ('NV');
 INSERT INTO `warehouse` (`state`) VALUES ('OH');
-INSERT INTO `warehouse` (`state`) VALUES (N'MA');
+INSERT INTO `warehouse` (`state`) VALUES ('MA');
+
+SELECT * FROM warehouse;

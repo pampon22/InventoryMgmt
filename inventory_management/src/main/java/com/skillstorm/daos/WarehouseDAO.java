@@ -25,12 +25,12 @@ import com.skillstorm.models.Warehouse;
 		
 		public Warehouse save(Warehouse warehouse);
 		
-		public void delete(Warehouse Warehouse);
+		public boolean delete(Warehouse warehouse);
 		
-		public void delete(int id);
+		public boolean deleteById(int id);
 		
-		public void deleteMany(int[] ids);
+		public boolean deleteMany(int[] ids);
 		
-		public void update(Warehouse warehouse);
+		public boolean update(Warehouse warehouse);
 	}
 
