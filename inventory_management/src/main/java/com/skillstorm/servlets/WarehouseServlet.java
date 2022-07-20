@@ -19,7 +19,11 @@ import com.skillstorm.services.URLParserService;
 
 
 /**
+ * Servlet Lifecycle
  * 
+ * init - A method called when the web server first creates our servlet
+ * service - method called before EVERY request
+ * destroy - method called when the web server is stopped/servlet terminates
  * @author phil
  *
  */
@@ -35,7 +39,41 @@ public class WarehouseServlet extends HttpServlet {
 	
 	
 	/**
-	 * handles GET requests from the client. returns all warehouses
+	 * This allows us to write code that is run right as the servlet is created
+	 * You can establish any connections
+	 */
+	@Override
+	public void init() throws ServletException {
+		System.out.println("Warehouse Servlet Created!");
+		super.init();
+	}
+	
+	/**
+	 * If any connections were established in init
+	 * Terminate those connections here
+	 */
+	@Override
+	public void destroy() {
+		System.out.println("Warehouse Servlet Destroyed!");
+		super.destroy();
+	}
+	
+	
+	/**
+	 * we would prefer filters to this
+	 * activates on ALL HTTP requests to this servlet
+	 */
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("Servicing request!");
+		super.service(req, resp);
+	}	
+	
+	
+	/**
+	 * handles GET requests from the client. 
+	 * returns all warehouses if no id is specified
+	 * if id provided (as in {.../warehouse/(id)}, then returns the warehouse with that id
 	 * @param
 	 * @param
 	 */
@@ -66,6 +104,7 @@ public class WarehouseServlet extends HttpServlet {
 	
 	/**
 	 * handles POST requests from the client
+	 * creates a warehouse with provided attributes
 	 * @param
 	 */
 	@Override
@@ -88,6 +127,8 @@ public class WarehouseServlet extends HttpServlet {
 	
 	/**
 	 * handles PUT requests from the client
+	 * idempotent so creates or updates the same warehouse if called multiple time. 
+	 * use to update a warehouse
 	 * @param
 	 */	
 	@Override
@@ -100,7 +141,7 @@ public class WarehouseServlet extends HttpServlet {
 			if (success) {
 				resp.setContentType("application/json");
 				resp.getWriter().print(mapper.writeValueAsString(newWarehouse));
-				resp.setStatus(201);	// because creating an object				
+				resp.setStatus(201);	// because updating an object				
 			}
 		} catch (Exception e) {
 			resp.setStatus(400);
@@ -111,6 +152,7 @@ public class WarehouseServlet extends HttpServlet {
 	
 	/**
 	 * handles DELETE requests from the client
+	 * deletes a warehouse 
 	 * @param
 	 */
 	@Override
@@ -122,7 +164,7 @@ public class WarehouseServlet extends HttpServlet {
 			if (success) {
 				resp.setContentType("application/json");
 				resp.getWriter().print(mapper.writeValueAsString(newWarehouse));
-				resp.setStatus(201);	// because creating an object				
+				resp.setStatus(200);	// because deleting an object				
 			}
 		} catch (Exception e) {
 			resp.setStatus(400);

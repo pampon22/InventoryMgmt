@@ -10,9 +10,9 @@ public class Shoe {
 	
 	private int id;
 	private String name;
-//	private enum Gender {
-//		male, female, unisex
-//	};
+	private enum Gender {
+		MALE, FEMALE, UNISEX
+	};
 	private int size;
 	private String color;
 	private String brand;
@@ -135,7 +135,7 @@ public class Shoe {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
+	
 
 	@Override
 	public String toString() {

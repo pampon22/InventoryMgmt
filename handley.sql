@@ -37,7 +37,7 @@ CREATE TABLE `brand` (
 CREATE TABLE `shoe` (
   `shoe_id` int unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `size` int unsigned NOT NULL,
+  `size` double unsigned NOT NULL,
   `gender` enum('male','female','unisex') NOT NULL,
   `FK_shoe_location_id` int unsigned NOT NULL,
   `color` varchar(45) NOT NULL,
@@ -71,3 +71,10 @@ INSERT INTO `warehouse` (`state`) VALUES ('OH');
 INSERT INTO `warehouse` (`state`) VALUES ('MA');
 
 SELECT * FROM warehouse;
+
+INSERT INTO `brand` (`name`) VALUES ('Nike');
+
+INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_shoe_location_id`, `fk_shoe_brand_id`, `color`) VALUES ('Lebron soldier', 10, "male", 11, '1', 'red'); 
+INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_shoe_location_id`, `fk_shoe_brand_id`, `color`) VALUES ('Air force 1', 8.5, "unisex", 11, '1', 'white'); 
+
+SELECT * FROM shoe;
