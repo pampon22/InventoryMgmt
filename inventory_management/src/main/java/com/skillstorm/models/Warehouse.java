@@ -28,14 +28,27 @@ public class Warehouse {
 		super();
 		this.state = state;
 	}
+
 	
+	/**
+	 * use this for auto-increment column
+	 * @param state
+	 * @param capacity
+	 */
+	public Warehouse(String state, int capacity) {
+		super();
+		this.state = state;
+		this.capacity = capacity;
+	}
 	
+	@Deprecated
 	public Warehouse(int id, String state) {
 		super();
 		this.id = id;
 		this.state = state;
 	}
 
+	@Deprecated
 	public Warehouse(int id, String state, int capacity) {
 		super();
 		this.id = id;

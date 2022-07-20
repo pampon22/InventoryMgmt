@@ -32,7 +32,7 @@ public class Driver {
 //		System.out.println(byState);
 //		
 //		System.out.println(w.findById(1));
-		Warehouse newWarehouse = new Warehouse("NV");
+		Warehouse newWarehouse = new Warehouse("NV", 10);
 		w.save(newWarehouse);
 		
 		System.out.println(w.findAll());

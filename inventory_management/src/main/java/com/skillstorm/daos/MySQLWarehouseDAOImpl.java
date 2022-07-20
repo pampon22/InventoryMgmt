@@ -76,13 +76,15 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 
 	@Override
 	public Warehouse save(Warehouse warehouse) {
-		String sql = "INSERT INTO warehouse (state) VALUES (?)";
+		String sql = "INSERT INTO warehouse (state, capacity) VALUES (?, ?)";
 					
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
 		
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, warehouse.getState());
-			int rowsAffected = ps.executeUpdate(); 
+			ps.setInt(2, warehouse.getCapacity());
+			int rowsAffected = ps.executeUpdate();
+			// System.out.println(rowsAffected); 
 			// If 0 is returned, my data didn't save
 			if (rowsAffected != 0) {
 				ResultSet keys = ps.getGeneratedKeys();
@@ -166,7 +168,6 @@ public class MySQLWarehouseDAOImpl implements WarehouseDAO {
 		String sql = "UPDATE warehouse SET state = ?, capacity = ? WHERE warehouse_id = ?";
 		boolean rowUpdated = false;
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
-			
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 //			ps.setInt(1, warehouse.getId());
 			ps.setString(1, warehouse.getState());

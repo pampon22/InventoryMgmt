@@ -1,6 +1,7 @@
 package com.skillstorm.servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.daos.MySQLWarehouseDAOImpl;
 import com.skillstorm.daos.WarehouseDAO;
+import com.skillstorm.models.NotFound;
 import com.skillstorm.models.Warehouse;
 import com.skillstorm.services.URLParserService;
 
@@ -47,9 +49,11 @@ public class WarehouseServlet extends HttpServlet {
 				resp.getWriter().print(mapper.writeValueAsString(warehouse));	// sends back the data to the request side, parsed as JSON
 			} else {
 				resp.setStatus(404);
+				// resp.getWriter().print(mapper.writeValueAsString(new IllegalArgumentException("No warehouse with the provided Id found")));
+				resp.getWriter().print(mapper.writeValueAsString(new NotFound("No warehouse with the provided id found")));
 			}
 		} catch (Exception e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			System.out.println(req.getPathInfo());
 			List<Warehouse> warehouses = dao.findAll();
 			System.out.println(warehouses);									// writes to the console when we send the GET request.
@@ -59,16 +63,6 @@ public class WarehouseServlet extends HttpServlet {
 			
 	}
 	
-	/**
-	 * handles PUT requests from the client
-	 * @param
-	 */	
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPut(req, resp);
-	}
-	
 	
 	/**
 	 * handles POST requests from the client
@@ -76,8 +70,42 @@ public class WarehouseServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		InputStream reqBody = req.getInputStream();
+		Warehouse newWarehouse = mapper.readValue(reqBody, Warehouse.class);
+		try {
+			newWarehouse = dao.save(newWarehouse);	// in case our id changes
+			if (newWarehouse != null) {
+				resp.setContentType("application/json");
+				resp.getWriter().print(mapper.writeValueAsString(newWarehouse));
+				resp.setStatus(201);	// because creating an object				
+			}
+		} catch (Exception e) {
+			resp.setStatus(400);
+			resp.getWriter().print(mapper.writeValueAsString(new NotFound("Couldn't create warehouse")));
+		}
+	}
+	
+	
+	/**
+	 * handles PUT requests from the client
+	 * @param
+	 */	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		InputStream reqBody = req.getInputStream();
+		Warehouse newWarehouse = mapper.readValue(reqBody, Warehouse.class);
+		boolean success = false;
+		try {
+			success = dao.update(newWarehouse);	// in case our id changes
+			if (success) {
+				resp.setContentType("application/json");
+				resp.getWriter().print(mapper.writeValueAsString(newWarehouse));
+				resp.setStatus(201);	// because creating an object				
+			}
+		} catch (Exception e) {
+			resp.setStatus(400);
+			resp.getWriter().print(mapper.writeValueAsString(new NotFound("Couldn't create warehouse")));
+		}
 	}
 	
 	
@@ -87,8 +115,19 @@ public class WarehouseServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
+		InputStream reqBody = req.getInputStream();
+		Warehouse newWarehouse = mapper.readValue(reqBody, Warehouse.class);
+		try {
+			boolean success = dao.delete(newWarehouse);	// in case our id changes
+			if (success) {
+				resp.setContentType("application/json");
+				resp.getWriter().print(mapper.writeValueAsString(newWarehouse));
+				resp.setStatus(201);	// because creating an object				
+			}
+		} catch (Exception e) {
+			resp.setStatus(400);
+			resp.getWriter().print(mapper.writeValueAsString(new NotFound("Couldn't create warehouse")));
+		}
 	}
 
 }
