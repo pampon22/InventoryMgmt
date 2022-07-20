@@ -28,6 +28,13 @@ public class Warehouse {
 		super();
 		this.state = state;
 	}
+	
+	
+	public Warehouse(int id, String state) {
+		super();
+		this.id = id;
+		this.state = state;
+	}
 
 	public Warehouse(int id, String state, int capacity) {
 		super();

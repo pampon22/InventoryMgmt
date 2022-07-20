@@ -1,0 +1,24 @@
+.box-center {
+	align-items: center;
+	justify-content: center;
+
+}
+.md1-Layout content {
+	padding: 24px;
+	flex: none;
+}
+
+.demo-Layout-transparent{
+	background-color:#006be5;
+}
+
+.demo-layout-transparent.mdl-Layoutheader,
+.demo-Layout-transparent.ndl-Layout_drawer-button {
+	/* This background is dark, so we set the text to white. */
+	color: white;
+}
+
+.mdl-grid.center-items {
+	align-items: center;
+	justify-content: center;	
+}
