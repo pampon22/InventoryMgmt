@@ -1,0 +1,14 @@
+<!-- <p>warehouse-list works!</p> -->
+
+<table>
+    <thead>
+        <tr><th>ID</th><th>State</th><th>Capacity</th></tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let warehouse of warehouses">
+            <td>{{warehouse.id}}</td>
+            <td>{{warehouse.state}}</td>
+            <td>{{warehouse.capacity}}</td>
+        </tr>
+    </tbody>
+</table>

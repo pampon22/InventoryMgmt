@@ -16,7 +16,7 @@ public class Shoe {
 	private int size;
 	private String color;
 	private String brand;
-	private int quantity;
+	// private int quantity;
 	
 	/**
 	 * no arg constructor
@@ -127,6 +127,7 @@ public class Shoe {
 	}
 
 	
+	/*
 	public int getQuantity() {
 		return this.quantity;
 	}
@@ -135,12 +136,11 @@ public class Shoe {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+	*/
 
 	@Override
 	public String toString() {
-		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand
-				+ ", quantity=" + quantity + "]";
+		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand + "]";
 	}
 
 	
