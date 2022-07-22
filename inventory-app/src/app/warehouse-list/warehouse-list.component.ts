@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WarehouseApiService } from '../warehouse-api.service';
+import { WarehouseApiService } from '../services/warehouse-api.service';
 import { Warehouse } from '../models/Warehouse';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WarehouseApiService } from '../warehouse-api.service';
+import { WarehouseApiService } from '../services/warehouse-api.service';
 
 @Component({
   selector: 'app-find-warehouse',
@@ -18,12 +18,15 @@ export class FindWarehouseComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  }
-
+    this.service.findById(this.searchId).subscribe(data => {
+      this.warehouse = data;
+    }
+  )};
+  
   onChange() {
     this.service.findById(this.searchId).subscribe(data => {
       this.warehouse = data;
-  }
+    }
   )};
 
 }

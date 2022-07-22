@@ -8,12 +8,14 @@ export class Shoe {
     size: number;
     color: string;
     brand: string;
+    location : number;
     
-    constructor(id = 0, name = "", size = 0, color = "", brand = "") {
+    constructor(id = 0, name = "", size = 0, color = "", brand = "", location = 0) {
         this.id = id;
         this.name = name;
         this.size = size;
         this.color = color;
         this.brand = brand;
+        this.location = location;
     }
 }
