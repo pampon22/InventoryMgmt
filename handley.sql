@@ -24,7 +24,7 @@ USE `Handley`;
 CREATE TABLE `warehouse` (
   `warehouse_id` int unsigned NOT NULL AUTO_INCREMENT,
   `state` char(2) NOT NULL,
-  `capacity` int unsigned DEFAULT NULL,
+  `capacity` int unsigned DEFAULT 0,
   PRIMARY KEY (`warehouse_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -39,14 +39,12 @@ CREATE TABLE `shoe` (
   `name` varchar(45) NOT NULL,
   `size` double unsigned NOT NULL,
   `gender` enum('male','female','unisex') NOT NULL,
-  `FK_shoe_location_id` int unsigned NOT NULL,
+  `fk_location_id` int unsigned NOT NULL,
   `color` varchar(45) NOT NULL,
-  `FK_shoe_brand_id` int unsigned NOT NULL,
+  `brand` varchar(45) NOT NULL,
   PRIMARY KEY (`shoe_id`),
-  KEY `location_id_idx` (`FK_shoe_location_id`),
-  KEY `brand_id_idx` (`FK_shoe_brand_id`,`FK_shoe_location_id`),
-  CONSTRAINT `FK_shoe_brand_id` FOREIGN KEY (`FK_shoe_brand_id`) REFERENCES `brand` (`brand_id`),
-  CONSTRAINT `FK_shoe_location_id` FOREIGN KEY (`FK_shoe_location_id`) REFERENCES `warehouse` (`warehouse_id`)
+  KEY `location_id_idx` (`fk_location_id`),
+  CONSTRAINT `fk_location_id` FOREIGN KEY (`fk_location_id`) REFERENCES `warehouse` (`warehouse_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `postal_code` (
@@ -65,8 +63,8 @@ CREATE TABLE `postal_code` (
 /**********
 	Population with data
 ***********/
-INSERT INTO `warehouse` (`state`) VALUES ('CA');
-INSERT INTO `warehouse` (`state`) VALUES ('NV');
+INSERT INTO `warehouse` (`state`, `capacity`) VALUES ('CA', 2);
+INSERT INTO `warehouse` (`state`, `capacity`) VALUES ('NV', 40);
 INSERT INTO `warehouse` (`state`) VALUES ('OH');
 INSERT INTO `warehouse` (`state`) VALUES ('MA');
 
@@ -74,7 +72,10 @@ SELECT * FROM warehouse;
 
 INSERT INTO `brand` (`name`) VALUES ('Nike');
 
-INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_shoe_location_id`, `fk_shoe_brand_id`, `color`) VALUES ('Lebron soldier', 10, "male", 11, '1', 'red'); 
-INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_shoe_location_id`, `fk_shoe_brand_id`, `color`) VALUES ('Air force 1', 8.5, "unisex", 11, '1', 'white'); 
-
+INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_location_id`, `brand`, `color`) VALUES ('Lebron soldier',		10,	 "male",	11,	'Nike',			'red'); 
+INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_location_id`, `brand`, `color`) VALUES ('Air force 1',			8.5, "unisex",	12,	'Nike', 		'white');
+INSERT INTO `shoe` (`name`, `size`, `gender`, `fk_location_id`, `brand`, `color`) VALUES ('Under Armour Curry 6',	9,	 "female",	12,	'UnderArmor',	'off-white');
+INSERT INTO `shoe` (`name`, `size`, `brand`, `color`, `fk_location_id`) VALUES ("Disco Goldfish Platforms", 14, "multi-color", "The Internet", 11);
 SELECT * FROM shoe;
+SELECT * FROM warehouse;
+DESCRIBE shoe;

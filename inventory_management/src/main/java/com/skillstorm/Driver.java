@@ -6,6 +6,7 @@ import com.skillstorm.daos.MySQLShoeDAOImpl;
 import com.skillstorm.daos.MySQLWarehouseDAOImpl;
 import com.skillstorm.daos.ShoeDAO;
 import com.skillstorm.daos.WarehouseDAO;
+import com.skillstorm.models.Shoe;
 import com.skillstorm.models.Warehouse;
 
 /**
@@ -20,9 +21,6 @@ public class Driver {
 	 * main method: entry point of the class
 	 */
 	public static void main(String[] args) {
-//		ShoeDAO s = new MySQLShoeDAOImpl();
-//		List<Shoe> shoes = s.findAll();
-//		System.out.println(shoes);
 		
 		WarehouseDAO w = new MySQLWarehouseDAOImpl();
 		List<Warehouse> warehouses = w.findAll();
@@ -46,5 +44,25 @@ public class Driver {
 		System.out.println(w.update(new Warehouse(11, "CA", 10)));
 		
 		System.out.println(w.findAll());
+		
+		ShoeDAO s = new MySQLShoeDAOImpl();
+		List<Shoe> shoes = s.findAll();
+		System.out.println(shoes);
+
+		// List<Shoe> byName = s.findByName("Air force 1");
+		// System.out.println(byName);
+		
+		// System.out.println(s.findById(1));
+		Shoe newShoe = new Shoe("The Cacti Heel", 12.0, "green", "Weebs", 11);
+		Shoe newShoe2 = new Shoe("The Gum Stuck To The High Heel", 8.0, "pink", "GummyBears", 12);
+		s.save(newShoe);
+		s.save(newShoe2);
+		
+		System.out.println(s.findAll());
+		System.out.println(s.delete(5));
+		
+		System.out.println(s.update(new Shoe(6, "The Sandwich Flip Flops", 12.0, "brown", "McDonals", 11)));
+		
+		System.out.println(s.findAll());		
 	}
 }

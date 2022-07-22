@@ -1,5 +1,10 @@
 package com.skillstorm.models;
 
+/**
+ * 
+ * Field, Type, Null, Key, Default, Extra
+ * 
+ */
 
 /**
  * Shoe class that represents the shoe entity we want from the database
@@ -10,13 +15,12 @@ public class Shoe {
 	
 	private int id;
 	private String name;
-	private enum Gender {
-		MALE, FEMALE, UNISEX
-	};
-	private int size;
+	private double size;
 	private String color;
 	private String brand;
-	// private int quantity;
+	private int location;
+	private Gender gender;
+	 
 	
 	/**
 	 * no arg constructor
@@ -25,21 +29,39 @@ public class Shoe {
 		super();
 	}
 
-	
+
 	/**
+	 * auto-incremented so no passing in id
 	 * 
-	 * @param id: the shoe's id in the database 
-	 * @param name: name of the shoe
-	 * @param brand: brand name of the shoe
+	 * @param id
+	 * @param name
+	 * @param size
+	 * @param color
+	 * @param brand
+	 * @param location
 	 */
-	public Shoe(int id, String name, String brand) {
+	public Shoe(String name, double size, String color, String brand, int location) {
+		super();
+		this.name = name;
+		this.size = size;
+		this.color = color;
+		this.brand = brand;
+		this.location = location;
+	}
+
+	
+	
+	public Shoe(int id, String name, double size, String color, String brand, int location) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.size = size;
+		this.color = color;
 		this.brand = brand;
+		this.location = location;
 	}
-	
-	
+
+
 	/**
 	 * use this constructor for shoe with auto-increment id
 	 * @param id
@@ -81,7 +103,7 @@ public class Shoe {
 	}
 
 	
-	public int getSize() {
+	public double getSize() {
 		return this.size;
 	}
 
@@ -125,25 +147,23 @@ public class Shoe {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-
 	
-	/*
-	public int getQuantity() {
-		return this.quantity;
+
+	public int getLocation() {
+		return location;
 	}
 
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setLocation(int location) {
+		this.location = location;
 	}
-	*/
 
 	@Override
 	public String toString() {
-		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand + "]";
+		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand
+				+ ", location=" + location + "]";
 	}
 
-	
 //	public static void main(String[] args) {
 //		Shoe shoe = new Shoe(1, "lebron soldier", "nike");
 //		System.out.println(shoe);

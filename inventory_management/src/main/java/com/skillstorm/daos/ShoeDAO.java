@@ -22,17 +22,16 @@ public interface ShoeDAO {
 	 * @param name
 	 * @return 
 	 */
-	public Shoe findByName(String name);
+	public List<Shoe> findByName(String name);
 	
 	public Shoe findById(int id);
 	
 	public Shoe save(Shoe shoe);
 	
-	public void delete(Shoe shoe);
+	@Deprecated
+	public boolean delete(Shoe shoe);
 	
-	public void delete(int id);
-	
-	public void deleteMany(int[] ids);
-	
-	public void update(Shoe shoe);
+	public boolean delete(int id);
+		
+	public boolean update(Shoe shoe);
 }

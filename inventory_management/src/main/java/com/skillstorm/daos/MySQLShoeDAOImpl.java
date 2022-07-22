@@ -50,8 +50,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 			// You need to advance the cursor with it so that you can parse all of the results
 			while(rs.next()) {
 				// Looping over individual rows of the result set
-//				Shoe shoe = new Shoe(rs.getInt("ShoeID"), rs.getString("Name"));
-				Shoe shoe = new Shoe( rs.getInt("ShoeID"), rs.getString("Name"), rs.getString("Brand") );
+				Shoe shoe = new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_location_id"));
 				shoes.add(shoe);
 			}
 			
@@ -68,7 +67,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 	 * @return The Shoe with the given name if found, null if the shoe does not exist
 	 */
 	@Override
-	public Shoe findByName(String name) {
+	public List<Shoe> findByName(String name) {
 		/* using
 		 * String sql = "SELECT * FROM Artist WHERE name = " + name
 		 * is bad. that will imply that someone  
@@ -85,9 +84,11 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 //			ps.setString(2, brand);
 			ResultSet rs = ps.executeQuery();
 			// Make sure there was at least one item there
-			if (rs.next()) {
-				return new Shoe(rs.getInt(1), rs.getString(2), rs.getString(3));
+			List<Shoe> shoes = new LinkedList<Shoe>();
+			while (rs.next()) {
+				shoes.add(new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id")));
 			}
+			return shoes;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
@@ -106,7 +107,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				return new Shoe(rs.getInt(1), rs.getString(2), rs.getString(3));
+				return new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -117,44 +118,83 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 
 	@Override
 	public Shoe save(Shoe shoe) {
-		String sql = "INSERT INTO shoe (name, brand, color ...) VALUES (?)";
+		String sql = "INSERT INTO shoe (name, size, brand, color, fk_location_id) VALUES (?, ?, ?, ?, ?)";	
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setInt(1, shoe.getId());
-				ps.setString(2, shoe.getName());
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
+				PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, shoe.getName());
+				ps.setDouble(2, shoe.getSize());
+				ps.setString(3, shoe.getBrand());
+				ps.setString(4, shoe.getColor());
+				ps.setInt(5, shoe.getLocation());
+				int rowsAffected = ps.executeUpdate();
+				if (rowsAffected != 0) {
+					ResultSet keys = ps.getGeneratedKeys();
+					// List a of all generated keys
+					if (keys.next()) {
+						int key = keys.getInt(1); // gives the auto generated key
+						shoe.setId(key);
+						return shoe;
+					}
+					conn.commit();		// Executes ALL queries in a given transaction. Green button
+				} else {
+					conn.rollback();	// Undoes any of the queries. Database pretends those never happened
+				}
+			} catch (Exception e) {
+				// System.err.println(e);
+				e.printStackTrace();
+			}
 		return null;
 	}
 
-	
+	@Deprecated
 	@Override
-	public void delete(Shoe shoe) {
+	public boolean delete(Shoe shoe) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id) {
+		String sql = "DELETE FROM shoe WHERE shoe_id = ?";
+		boolean rowDeleted = false;
+		
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+		
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, id);
+			rowDeleted = ps.executeUpdate() > 0;
+			return rowDeleted;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+
+		return rowDeleted;
 		
 	}
 
 	@Override
-	public void update(Shoe shoe) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	@Override
-	public void deleteMany(int[] ids) {
-		// TODO Auto-generated method stub
-		
+	public boolean update(Shoe shoe) {
+		String sql = "UPDATE shoe SET name = ?, size = ?, color = ?, brand = ?, fk_location_id =? WHERE shoe_id = ?";
+		boolean rowUpdated = false;
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//			return new Shoe( rs.getInt("ShoeID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Location"));
+			ps.setString(1, shoe.getName());
+			ps.setDouble(2, shoe.getSize());
+			ps.setString(4, shoe.getBrand());
+			ps.setString(3, shoe.getColor());
+			ps.setInt(5, shoe.getLocation());
+			
+			ps.setInt(6, shoe.getId());
+			rowUpdated = ps.executeUpdate() > 0;
+			return rowUpdated;
+		} catch (Exception e) {
+			// System.err.println(e);
+			e.printStackTrace();
+		}
+		return rowUpdated;
 	}
 
 }
