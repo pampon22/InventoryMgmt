@@ -1,0 +1,45 @@
+<div class="container mt-3">
+	<div class="row">
+		<div class="col">
+			<form>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col">
+								<input class="form-control" type="text" placeholder="Search Shoe">
+							</div>
+							<div class="col">
+								<button *ngIf="" class="btn btn-primary"  type="submit" (click)=shoe.find() >Submit </button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+</div>
+
+<!-- <input type="number" name="searchId" [(ngModel)]="searchId" (change)="onChange()" /> -->
+<!-- parent/ child   @Input/@Output -->
+<!-- separate child component that renders a single Artist object on a card-->
+<!-- pass the selected artist to the child component  -->
+
+<!-- shoeCardComponent -->
+<!-- <section *ngIf="shoe"> -->
+<!-- conditional rendering - if artist obj is truthy -->
+    <!-- <div>ID: {{shoe.id}}</div> -->
+    <!-- <div>Name: {{artist.name}}</div> -->
+<!-- </section> -->
+
+<!-- <input
+  ng-model="string"
+  [name="string"]
+  [required="string"]
+  [ng-required="boolean"]
+  [ng-minlength="number"]
+  [ng-maxlength="number"]
+  [ng-pattern="string"]
+  [ng-change="string"]
+  [ng-trim="boolean"]>
+
+</input>
+-->

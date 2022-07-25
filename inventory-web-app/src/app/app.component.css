@@ -1,0 +1,19 @@
+.container-fluid {
+    background-image: url("src/images/bkgrnd.jpeg") !important;
+    background-size: cover;
+    background-position: center;
+}
+
+.footer {
+  image-rendering: auto;
+}
+
+.navbar.center .navbar-inner {
+  text-align: center;
+}
+
+.navbar.center .navbar-inner .nav {
+  display:inline-block;
+  float: none;
+  vertical-align: top;
+}

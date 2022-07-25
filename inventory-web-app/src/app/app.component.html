@@ -1,0 +1,52 @@
+<div>
+  <!-- header -->
+  <header>
+    <div class="navbar navbar-dark bg-dark">
+      <!-- logo -->
+      <div class="navbar-brand">
+        <a class="navbar-item" href="">
+          <img class="header" src="images/ikonic.png" alt="logo">
+        </a>
+      </div>
+    </div>
+    <div style="text-align: center; font-family: cursive; font-size: 100px; background-color: #343A40; color: aliceblue;">Shoe Inventory</div>
+    <div style="background-color: #8a7a33; color: #8a7a33; font-size: 1px;"> i</div>
+  </header>
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark has-text-centered">
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="shoes" class="nav-link" style="color:white ">List all</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="add" class="nav-link" style="color:whitesmoke">Add</a>
+      </li>
+      <li class="nav-item">
+
+        <p> {{shoe.id} </p>
+      </li>
+    </div>
+
+  </nav>
+  
+  <div class="container-fluid">
+    <app-find-shoe></app-find-shoe>
+            <router-outlet></router-outlet>
+
+  </div>
+  
+  <!-- <div>
+    <router-outlet></router-outlet>
+  </div> -->
+    
+
+  <!-- footer -->
+  <footer style="background-color: #343A40;">
+    <div class="container content has-text-centered">
+      <p style="color:aliceblue; font-family:cursive ">Brought to you by <img class="footer" src="images/skillstorm.png" alt="skillstorm-logo"> </p>
+      
+    </div>
+
+  </footer>
+
+</div>

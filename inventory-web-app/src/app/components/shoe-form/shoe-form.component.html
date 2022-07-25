@@ -1,0 +1,36 @@
+<div>
+    <div class="submit form">
+        <div *ngIf="!submitted">
+            <div class="form-group">
+                <label for="ID">Id</label>
+                <input type="number" class="form-control" id="id" name="id" [(ngModel)]="shoe.id" required/>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="shoe.name" required/>
+            </div>
+            <div class="form-group">
+                <label for="Color">Color</label>
+                <input type="text" class="form-control" id="color" name="color" [(ngModel)]="shoe.color" required/>
+            </div>
+            <div class="form-group">
+                    <label for="Brand">Brand</label>
+                <input type="text" class="form-control" id="brand" name="brand" [(ngModel)]="shoe.brand" required/>
+            </div>
+            <div class="form-group">
+                    <label for="Quantity">Quantity</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="shoe.quantity" required/>
+            </div>
+            <div class="form-group">
+                <label for="Location">Location</label>
+            <input type="number" class="form-control" id="location" name="location" [(ngModel)]="shoe.location" required/>
+        </div>
+            <button type="submit" class="btn btn-primary" (click)="saveShoe()">Submit</button>
+        </div>
+        <div *ngIf="submitted">
+            <h3>Shoe successfully created!</h3>
+            <button type="button" class="btn btn-success" (click)="newShoe()">Add again?</button>
+
+        </div>
+    </div>
+</div>

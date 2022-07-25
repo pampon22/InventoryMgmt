@@ -28,10 +28,12 @@ public interface ShoeDAO {
 	
 	public Shoe save(Shoe shoe);
 	
-	@Deprecated
-	public boolean delete(Shoe shoe);
+//	@Deprecated
+//	public boolean delete(Shoe shoe);
 	
 	public boolean delete(int id);
 		
 	public boolean update(Shoe shoe);
+
+	public List<Shoe> findShoeLike(String str);
 }

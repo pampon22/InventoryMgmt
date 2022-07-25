@@ -1,0 +1,47 @@
+<!-- <table>
+    <thead>
+        <tr><th>ID</th><th>Name</th><th>Brand</th><th>Color</th><th>Size</th><th>Location</th></tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let shoe of shoes">
+            <td>{{shoe.id}}</td>
+            <td>{{shoe.name}}</td>
+            <td>{{shoe.brand}}</td>
+            <td>{{shoe.color}}</td>
+            <td>{{shoe.size}}</td>
+            <td>{{shoe.location}}</td>
+        </tr>
+    </tbody>
+</table> -->
+
+
+<div>
+    <p-table [value]="shoes" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-shoe>
+            <tr>
+                <td>{{shoe.id}}</td>
+                <td>{{shoe.name}}</td>
+                <td>{{shoe.brand}}</td>
+                <td>{{shoe.color}}</td>
+                <td>{{shoe.size}}</td>
+                <td>{{shoe.location}}</td>
+                <td>
+                    <button class="btn btn-info" (click)="shoe.update(shoe)">Edit</button>
+                    <button class="btn btn-danger mx-3" (click)="shoe.delete(shoe)">Delete</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+</div>

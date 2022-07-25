@@ -15,11 +15,11 @@ public class Shoe {
 	
 	private int id;
 	private String name;
-	private double size;
 	private String color;
 	private String brand;
 	private int location;
 	private Gender gender;
+	private int quantity;
 	 
 	
 	/**
@@ -40,22 +40,30 @@ public class Shoe {
 	 * @param brand
 	 * @param location
 	 */
-	public Shoe(String name, double size, String color, String brand, int location) {
+	public Shoe(String name, String color, String brand, int quantity, int location) {
 		super();
 		this.name = name;
-		this.size = size;
+		this.quantity = quantity;
 		this.color = color;
 		this.brand = brand;
 		this.location = location;
 	}
 
-	
-	
-	public Shoe(int id, String name, double size, String color, String brand, int location) {
+	public Shoe(int id, String name, String color, String brand, int quantity, int location) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.size = size;
+		this.quantity = quantity;
+		this.color = color;
+		this.brand = brand;
+		this.location = location;
+	}
+	
+	
+	public Shoe(int id, String name, String color, String brand, int location) {
+		super();
+		this.id = id;
+		this.name = name;
 		this.color = color;
 		this.brand = brand;
 		this.location = location;
@@ -103,16 +111,6 @@ public class Shoe {
 	}
 
 	
-	public double getSize() {
-		return this.size;
-	}
-
-	
-	public void setSize(int size) {
-		this.size = size;
-	}
-
-	
 	/**
 	 * 
 	 * @return returns the shoe's color
@@ -157,10 +155,21 @@ public class Shoe {
 	public void setLocation(int location) {
 		this.location = location;
 	}
+	
+	
+	public int getQuantity() {
+		return this.quantity;
+	}
 
+	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "Shoe [id=" + id + ", name=" + name + ", size=" + size + ", color=" + color + ", brand=" + brand
+		return "Shoe [id=" + id + ", name=" + name + ", color=" + color + ", brand=" + brand
 				+ ", location=" + location + "]";
 	}
 

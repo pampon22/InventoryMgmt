@@ -1,0 +1,73 @@
+<div *ngIf="viewMode; else editMode">
+    <div *ngIf="currentShoe.id">
+        <h3>Shoe</h3>
+        <div>
+            <label><strong>Shoe Id:</strong></label> 
+            {{currentShoe.id}}
+        </div>
+        <div>
+            <label><strong>Name:</strong></label> 
+            {{currentShoe.name}}
+        </div>
+
+        <div>
+            <label><strong>Color:</strong></label> 
+            {{currentShoe.color}}
+        </div>
+        <div>
+            <label><strong>Brand:</strong></label> 
+            {{currentShoe.brand}}
+        </div>
+        <div>
+            <label><strong>Quantity:</strong></label> 
+            {{currentShoe.quantity}}
+        </div>
+        <div>
+            <label><strong>Location:</strong></label> 
+            {{currentShoe.location}}
+        </div>
+
+        <a class="badge badge-warning" routerLink="/shoes/{{currentShoe.id}}">Update</a>
+        <!-- <button type="button" class="btn btn-danger" (click)="deleteShoe()">Delete</button> -->
+
+    </div>
+
+    <div *ngIf="!currentShoe">
+        <br>
+        <p> Please select a shoe for more details </p>
+    </div>
+</div>
+
+<ng-template #editMode>
+    <div *ngIf="currentShoe.id" class="edit-form">
+        <h3>Shoe</h3>
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="currentShoe.name" required/>
+            </div>
+            <div class="form-group">
+                <label for="name">Color</label>
+                <input type="text" class="form-control" id="color" name="color" [(ngModel)]="currentShoe.color" required/>
+            </div>
+            <div class="form-group">
+                    <label for="name">Brand</label>
+                <input type="text" class="form-control" id="brand" name="brand" [(ngModel)]="currentShoe.brand" required/>
+            </div>
+            <div class="form-group">
+                    <label for="name">Quantity</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="currentShoe.quantity" required/>
+            </div>
+            <div class="form-group">
+                    <label for="name">Location</label>
+                <input type="number" class="form-control" id="location" name="location" [(ngModel)]="currentShoe.location" required/>
+            </div>
+        </form>
+        <button type="submit" class="btn btn-primary" (click)="updateShoe()">Submit</button>
+        <button class="btn btn-danger mr-2" (click)="deleteShoe()">Delete</button>
+    </div>
+    <div *ngIf="!currentShoe">
+        <br>
+        <p> Please select a shoe for more details </p>
+    </div>
+</ng-template>

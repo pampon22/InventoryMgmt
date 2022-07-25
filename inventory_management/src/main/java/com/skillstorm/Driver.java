@@ -22,28 +22,28 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 		
-		WarehouseDAO w = new MySQLWarehouseDAOImpl();
-		List<Warehouse> warehouses = w.findAll();
-		System.out.println(warehouses);
+//		WarehouseDAO w = new MySQLWarehouseDAOImpl();
+//		List<Warehouse> warehouses = w.findAll();
+//		System.out.println(warehouses);
 //
 //		List<Warehouse> byState = w.findByState("MA");
 //		System.out.println(byState);
 //		
 //		System.out.println(w.findById(1));
-		Warehouse newWarehouse = new Warehouse("NV", 10);
-		w.save(newWarehouse);
-		
-		System.out.println(w.findAll());
-		
-		System.out.println(w.delete(newWarehouse));
-		System.out.println(w.deleteById(13));
-		
-//		int[] ids = new int[] {1,3,14};
-//		System.out.println(w.deleteMany(ids));
-		
-		System.out.println(w.update(new Warehouse(11, "CA", 10)));
-		
-		System.out.println(w.findAll());
+//		Warehouse newWarehouse = new Warehouse("NV", 10);
+//		w.save(newWarehouse);
+//		
+//		System.out.println(w.findAll());
+//		
+//		System.out.println(w.delete(newWarehouse));
+//		System.out.println(w.deleteById(13));
+//		
+////		int[] ids = new int[] {1,3,14};
+////		System.out.println(w.deleteMany(ids));
+//		
+//		System.out.println(w.update(new Warehouse(11, "CA", 10)));
+//		
+//		System.out.println(w.findAll());
 		
 		ShoeDAO s = new MySQLShoeDAOImpl();
 		List<Shoe> shoes = s.findAll();
@@ -53,16 +53,16 @@ public class Driver {
 		// System.out.println(byName);
 		
 		// System.out.println(s.findById(1));
-		Shoe newShoe = new Shoe("The Cacti Heel", 12.0, "green", "Weebs", 11);
-		Shoe newShoe2 = new Shoe("The Gum Stuck To The High Heel", 8.0, "pink", "GummyBears", 12);
+		Shoe newShoe = new Shoe("The Cacti Heel", "green", "Weebs", 1, 11);
+		Shoe newShoe2 = new Shoe("The Gum Stuck To The High Heel", "pink", "GummyBears", 4, 11);
 		s.save(newShoe);
 		s.save(newShoe2);
 		
-		System.out.println(s.findAll());
 		System.out.println(s.delete(5));
+		System.out.println(s.findById(5));
 		
-		System.out.println(s.update(new Shoe(6, "The Sandwich Flip Flops", 12.0, "brown", "McDonals", 11)));
-		
-		System.out.println(s.findAll());		
+//		System.out.println(s.update(new Shoe(6, "The Sandwich Flip Flops", 12.0, "brown", "McDonals", 11)));
+//		
+//		System.out.println(s.findShoeLike("The Gum Stuck To The High Heel"));
 	}
 }

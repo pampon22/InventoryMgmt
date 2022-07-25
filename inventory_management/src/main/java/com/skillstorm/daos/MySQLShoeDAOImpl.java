@@ -1,5 +1,6 @@
 package com.skillstorm.daos;
 
+import java.security.DrbgParameters.Reseed;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,7 +51,8 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 			// You need to advance the cursor with it so that you can parse all of the results
 			while(rs.next()) {
 				// Looping over individual rows of the result set
-				Shoe shoe = new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_location_id"));
+//				Shoe shoe = new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getInt("Quantity"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_location_id"));
+				Shoe shoe = new Shoe(rs.getInt("Shoe_Id"), rs.getString("Name"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Quantity"), rs.getInt("fk_location_id"));
 				shoes.add(shoe);
 			}
 			
@@ -69,7 +71,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 	@Override
 	public List<Shoe> findByName(String name) {
 		/* using
-		 * String sql = "SELECT * FROM Artist WHERE name = " + name
+		 * String sql = "SELECT * FROM Shoe WHERE name = " + name
 		 * is bad. that will imply that someone  
 		 * we'll use parameterized queries instead
 		 */
@@ -86,13 +88,36 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 			// Make sure there was at least one item there
 			List<Shoe> shoes = new LinkedList<Shoe>();
 			while (rs.next()) {
-				shoes.add(new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id")));
+//				shoes.add(new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getInt("Quantity"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id")));
+				shoes.add(new Shoe(rs.getInt("Shoe_Id"), rs.getString("Name"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Quantity"), rs.getInt("fk_location_id")));
 			}
 			return shoes;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
 		return null; // Null if not found
+	}
+	
+	
+	@Override
+	public List<Shoe> findShoeLike(String str) {
+		String sql = "SELECT * FROM Shoe WHERE name LIKE ?";
+		List<Shoe> shoes = new LinkedList<Shoe>();
+		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(sql);
+//			ps.setString(1, str);
+			ps.setString(1, "%" + str + "%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+//				shoes.add(new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getInt("Quantity"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id")));
+				shoes.add(new Shoe(rs.getInt("Shoe_Id"), rs.getString("Name"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Quantity"), rs.getInt("fk_location_id")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return shoes;
 	}
 
 
@@ -107,7 +132,9 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
-				return new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id"));
+//				return new Shoe( rs.getInt("Shoe_ID"), rs.getString("Name"), rs.getInt("Quantity"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("fk_Location_id"));
+				return new Shoe(rs.getInt("Shoe_Id"), rs.getString("Name"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Quantity"), rs.getInt("fk_location_id"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,13 +145,13 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 
 	@Override
 	public Shoe save(Shoe shoe) {
-		String sql = "INSERT INTO shoe (name, size, brand, color, fk_location_id) VALUES (?, ?, ?, ?, ?)";	
+		String sql = "INSERT INTO shoe (name, brand, color, quantity, fk_location_id) VALUES (?, ?, ?, ?, ?)";	
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
 				PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, shoe.getName());
-				ps.setDouble(2, shoe.getSize());
-				ps.setString(3, shoe.getBrand());
-				ps.setString(4, shoe.getColor());
+				ps.setString(2, shoe.getBrand());
+				ps.setString(3, shoe.getColor());
+				ps.setInt(4, shoe.getQuantity());
 				ps.setInt(5, shoe.getLocation());
 				int rowsAffected = ps.executeUpdate();
 				if (rowsAffected != 0) {
@@ -146,12 +173,7 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 		return null;
 	}
 
-	@Deprecated
-	@Override
-	public boolean delete(Shoe shoe) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	
 	@Override
@@ -176,13 +198,12 @@ public class MySQLShoeDAOImpl implements ShoeDAO{
 
 	@Override
 	public boolean update(Shoe shoe) {
-		String sql = "UPDATE shoe SET name = ?, size = ?, color = ?, brand = ?, fk_location_id =? WHERE shoe_id = ?";
+		String sql = "UPDATE shoe SET name = ?, quantity = ?, color = ?, brand = ?, fk_location_id =? WHERE shoe_id = ?";
 		boolean rowUpdated = false;
 		try (Connection conn = HandleyDBCreds.getInstance().getConnection()) {
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//			return new Shoe( rs.getInt("ShoeID"), rs.getString("Name"), rs.getDouble("Size"), rs.getString("Color"), rs.getString("Brand"), rs.getInt("Location"));
 			ps.setString(1, shoe.getName());
-			ps.setDouble(2, shoe.getSize());
+			ps.setInt(2, shoe.getQuantity());
 			ps.setString(4, shoe.getBrand());
 			ps.setString(3, shoe.getColor());
 			ps.setInt(5, shoe.getLocation());

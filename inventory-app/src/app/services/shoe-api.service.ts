@@ -49,7 +49,7 @@ export class ShoeApiService {
   }
 
   delete(shoe :any) :Observable<any> {
-    return this.http.delete(this.baseUrl + "/" + shoe);
+    return this.http.delete(this.baseUrl + "/delete/" + shoe);
   }
 
   deleteById(id :number) :Observable<any> {

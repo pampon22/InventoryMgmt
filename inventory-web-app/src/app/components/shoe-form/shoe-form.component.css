@@ -1,0 +1,12 @@
+.submit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* .submit-form {
+    max-width: 400px;
+    margin: auto;
+} */

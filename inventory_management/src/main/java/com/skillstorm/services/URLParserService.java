@@ -13,4 +13,9 @@ public class URLParserService {
 		return Integer.parseInt(splitString[1]); // Throws an exception if this isn't a int
 	}
 
+	public String extractStringFromURL(String url) {
+		String[] splitString = url.split("/");
+		
+		return splitString[1];
+	}
 }

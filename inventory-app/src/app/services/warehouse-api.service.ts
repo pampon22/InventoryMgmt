@@ -55,7 +55,7 @@ export class WarehouseApiService {
   }
 
   delete(warehouse :any) :Observable<any> {
-    return this.http.delete(this.baseUrl + "/" + warehouse);
+    return this.http.delete(this.baseUrl + "/delete/" + warehouse);
   }
 
   deleteById(id :number) :Observable<any> {

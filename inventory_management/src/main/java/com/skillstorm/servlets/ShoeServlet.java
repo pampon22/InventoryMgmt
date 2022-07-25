@@ -90,16 +90,33 @@ public class ShoeServlet extends HttpServlet {
 				// resp.getWriter().print(mapper.writeValueAsString(new IllegalArgumentException("No shoe with the provided Id found")));
 				resp.getWriter().print(mapper.writeValueAsString(new NotFound("No shoe with the provided id found")));
 			}
+			/*
+			try {
+				String key = urlService.extractStringFromURL(req.getPathInfo());
+				List<Shoe> shoes = dao.findShoeLike(key);
+				if ( !(shoes.isEmpty()) ) {
+					resp.setContentType("application/json");
+					resp.getWriter().print(mapper.writeValueAsString(shoes));	// sends back the data to the request side, parsed as JSON
+				} else {
+					resp.setStatus(404);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			*/
 		} catch (Exception e) {
-			// e.printStackTrace();
 			System.out.println(req.getPathInfo());
 			List<Shoe> shoes = dao.findAll();
 			System.out.println(shoes);									// writes to the console when we send the GET request.
 			resp.setContentType("application/json");
 			resp.getWriter().print(mapper.writeValueAsString(shoes));	// sends back the data to the request side, parsed as JSON
 		}
-			
 	}
+	
+	
+//	protected void doGet() {
+//		
+//	}
 	
 	
 	/**
@@ -157,18 +174,20 @@ public class ShoeServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		InputStream reqBody = req.getInputStream();
-		Shoe newShoe = mapper.readValue(reqBody, Shoe.class);
 		try {
-			boolean success = dao.delete(newShoe.getId());	// in case our id changes
+			int id = urlService.extractIdFromURL(req.getPathInfo());
+			Shoe shoe = dao.findById(id);
+			boolean success = dao.delete(shoe.getId());	// in case our id changes
 			if (success) {
 				resp.setContentType("application/json");
-				resp.getWriter().print(mapper.writeValueAsString(newShoe));
-				resp.setStatus(200);	// because deleting an object				
-			}
+				resp.getWriter().print(mapper.writeValueAsString(shoe));
+				resp.setStatus(200);	// because deleting an object
+			} else {
+				resp.setStatus(400);
+				resp.getWriter().print(mapper.writeValueAsString("Unsuccessful deleting shoe"));			}
 		} catch (Exception e) {
 			resp.setStatus(400);
-			resp.getWriter().print(mapper.writeValueAsString(new NotFound("Couldn't create shoe")));
+			resp.getWriter().print(mapper.writeValueAsString(new NotFound("Couldn't delete shoe because it doesn't exist")));
 		}
 	}
 
