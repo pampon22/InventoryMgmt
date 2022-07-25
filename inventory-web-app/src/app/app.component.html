@@ -1,37 +1,36 @@
 <div>
   <!-- header -->
   <header>
-    <div class="navbar navbar-dark bg-dark">
-      <!-- logo -->
-      <div class="navbar-brand">
-        <a class="navbar-item" href="">
-          <img class="header" src="images/ikonic.png" alt="logo">
-        </a>
-      </div>
-    </div>
     <div style="text-align: center; font-family: cursive; font-size: 100px; background-color: #343A40; color: aliceblue;">Shoe Inventory</div>
     <div style="background-color: #8a7a33; color: #8a7a33; font-size: 1px;"> i</div>
   </header>
 
-  <nav class="navbar navbar-expand navbar-dark bg-dark has-text-centered">
-    <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="shoes" class="nav-link" style="color:white ">List all</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="add" class="nav-link" style="color:whitesmoke">Add</a>
-      </li>
-      <li class="nav-item">
+  
+  <!-- Top navigation -->
+  <div class="topnav">
 
-        <p> {{shoe.id} </p>
-      </li>
+    <!-- Centered link -->
+    <div class="topnav-centered">
+      <a href="" class="active">List all shoes</a>
     </div>
 
-  </nav>
+    <!-- Left-aligned links (default) -->
+    <a href="add">Add new shoe </a>
+    <a></a>
+    <a href="warehouses">List Warehouses</a>
+
+    <!-- Right-aligned links -->
+    <div class="topnav-right">
+      <a>Current Capacity: total_capacity</a>
+    </div>
+
+  </div>
   
   <div class="container-fluid">
     <app-find-shoe></app-find-shoe>
-            <router-outlet></router-outlet>
+    <br><br>
+    <router-outlet></router-outlet>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
   </div>
   
@@ -42,8 +41,8 @@
 
   <!-- footer -->
   <footer style="background-color: #343A40;">
-    <div class="container content has-text-centered">
-      <p style="color:aliceblue; font-family:cursive ">Brought to you by <img class="footer" src="images/skillstorm.png" alt="skillstorm-logo"> </p>
+    <div class="container.fluid">
+      <div style="color:aliceblue; font-family:cursive; font: size 100px; ">Powered By <img width="250" height="50" src="../assets/images/skillstorm.png" alt="skillstorm-logo"> </div>
       
     </div>
 

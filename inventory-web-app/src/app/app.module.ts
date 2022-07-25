@@ -11,6 +11,7 @@ import { ShoeDetailsComponent } from './components/shoe-details/shoe-details.com
 import { ShoeListComponent } from './components/shoe-list/shoe-list.component';
 import { ShoeFormComponent } from './components/shoe-form/shoe-form.component';
 import { FindShoeComponent } from './components/find-shoe/find-shoe.component';
+import { WarehouseListComponent } from './components/warehouse-list/warehouse-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FindShoeComponent } from './components/find-shoe/find-shoe.component';
     ShoeDetailsComponent,
     ShoeListComponent,
     ShoeFormComponent,
-    FindShoeComponent
+    FindShoeComponent,
+    WarehouseListComponent
   ],
   imports: [
     BrowserModule,

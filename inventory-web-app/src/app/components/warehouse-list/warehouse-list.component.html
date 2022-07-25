@@ -1,0 +1,22 @@
+<div>
+    <p-table [value]="warehouses" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>State</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-warehouse>
+            <tr>
+                <td>{{warehouse.id}}</td>
+                <td>{{warehouse.state}}</td>
+                <td>
+                    <button class="btn btn-info" (click)="warehouse.update(warehouse)">Edit</button>
+                    <button class="btn btn-danger mx-3" (click)="warehouse.delete(warehouse)">Delete</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+</div>

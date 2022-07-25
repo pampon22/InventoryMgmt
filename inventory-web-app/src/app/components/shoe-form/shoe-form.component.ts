@@ -10,6 +10,8 @@ import { ShoeApiService } from 'src/app/services/shoe-api.service';
 export class ShoeFormComponent implements OnInit {
   shoe: Shoe = new Shoe();
   submitted : boolean = false;
+  creationMessage : string = "";
+  creationSuccess: boolean = false;
 
   constructor(private service: ShoeApiService) { }
 
@@ -22,9 +24,12 @@ export class ShoeFormComponent implements OnInit {
       next: (resp) => {
         console.log(resp);
         this.submitted = true;
+        this.creationMessage = "Shoe created successfully";
+        this.creationSuccess = true;
       },
       error: (err) => {
         console.log(err);
+        this.creationMessage = "Error creating shoe";
       }
     });
   }
